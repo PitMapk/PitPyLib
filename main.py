@@ -4,18 +4,29 @@ sys.path.append("PitPyLib")
 from PitPyLib import PitRootClass
 
 class PitAppClass(PitRootClass):
-
-    def PitLogWrite(self, fLog, mess):
-        with open(fLog, "w") as f:
-            f.writelines(super.PitGetfMess(mess))
+    @staticmethod
+    def PitLogWrite(fLog, mess):
+        with open(fLog, "a") as f:
+            f.write(f"{PitAppClass.PitOutfMess(mess)}\n")
         f.close()
+
+    @staticmethod
+    def PitLogClear(fLog):
+        import os
+        os.remove(fLog)
+        PitAppClass.PitOutMess(f'Log file {fLog} clear..')
 
 
 if __name__ == '__main__':
-    MyClass = PitAppClass
+    import sys
+    print(f"Test my Py Lib (c) Pit Smelyansky 2026\n")
 
-    MyClass.PitLogWrite(PitAppClass,'log.txt', 'Запись в лог..')
+    myClass = PitAppClass
+    myClass.PitOutMess("Hello, Pit!..")
 
-    #MyClass.PitOut('Hello Pit from class!..')
-    #MyClass.PitOut(sys.version)
-
+    #print(len(sys.argv))
+    if len(sys.argv) > 1 and sys.argv[1] == 'clr':
+        myClass.PitLogClear('Logs/log.txt')
+    else:
+        myClass.PitLogWrite('Logs/log.txt', 'Start work..')
+        myClass.PitLogWrite('Logs/log.txt', 'End work..')

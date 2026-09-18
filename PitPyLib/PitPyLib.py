@@ -7,8 +7,10 @@ import datetime
 
 class PitRootClass:
     @staticmethod
-    def PitGetfMess(mess):
-        return f'{datetime.datetime.now().strftime("%X %d-%m-%y")}\t{mess}'
+    def PitOutfMess(mess):
+        import datetime
+        return f'{datetime.datetime.now().strftime("%d-%m-%y %X")}:\t{mess}'
 
-    def PitOut(self, mess):
-        print(self.PitGetfMess(mess))
+    @staticmethod
+    def PitOutMess(mess):
+        print(PitRootClass.PitOutfMess(mess))
